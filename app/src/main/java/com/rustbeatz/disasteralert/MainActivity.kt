@@ -12,21 +12,31 @@ import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import com.rustbeatz.disasteralert.data.DisasterBroadcastRecord
 import com.rustbeatz.disasteralert.data.DisasterRepository
 import com.rustbeatz.disasteralert.data.network.Session
+import com.rustbeatz.disasteralert.data.repo.NetworkResponsesRepository
+import com.rustbeatz.disasteralert.data.repo.ResponsesRepository
+import com.rustbeatz.disasteralert.ui.components.DisasterBottomNavBar
+import com.rustbeatz.disasteralert.ui.components.MainBottomTab
 import com.rustbeatz.disasteralert.ui.components.DisasterSplashScreen
+import com.rustbeatz.disasteralert.ui.screens.AlertsHistoryScreen
 import com.rustbeatz.disasteralert.ui.screens.AuthorityDisasterBroadcastScreen
-import com.rustbeatz.disasteralert.ui.screens.HomeScreen
+import com.rustbeatz.disasteralert.ui.screens.HomeDashboardScreen
 import com.rustbeatz.disasteralert.ui.screens.OfficerLoginScreen
+import com.rustbeatz.disasteralert.ui.screens.map.ResponseMapScreen
 import com.rustbeatz.disasteralert.ui.theme.DisasterAlertTheme
 
 enum class AppDestination {
@@ -49,12 +59,19 @@ class MainActivity : ComponentActivity() {
             var isDarkTheme by remember { mutableStateOf(systemInDark) }
             var currentScreen by remember { mutableStateOf(AppDestination.SPLASH) }
 
+            // Tab state: defaults to HOME (Emergency Dashboard)
+            var currentTab by remember { mutableStateOf(MainBottomTab.HOME) }
+            var mapPreselectedAlertId by remember { mutableStateOf<Long?>(null) }
+
             // Live broadcast alert feed initialized with realistic NDMA records
             val broadcastsList = remember {
                 mutableStateListOf<DisasterBroadcastRecord>().apply {
                     addAll(DisasterRepository.sampleBroadcasts)
                 }
             }
+
+            // Live repository with automatic mock fallback when offline
+            val repository: ResponsesRepository = remember { NetworkResponsesRepository() }
 
             DisasterAlertTheme(
                 darkTheme = isDarkTheme,
@@ -99,13 +116,18 @@ class MainActivity : ComponentActivity() {
                         }
 
                         AppDestination.HOME -> {
-                            HomeScreen(
+                            // Three bottom tabs: HOME (Dashboard), ALERTS (Feed/History), MAP (Help Map)
+                            HomeWithTabs(
                                 isDarkTheme = isDarkTheme,
                                 onToggleTheme = { isDarkTheme = !isDarkTheme },
+                                broadcasts = broadcastsList,
+                                repository = repository,
+                                currentTab = currentTab,
+                                onTabSelected = { currentTab = it },
+                                mapPreselectedAlertId = mapPreselectedAlertId,
                                 onNavigateToEmergencyAlert = {
                                     currentScreen = AppDestination.AUTHORITY_DISPATCH
-                                },
-                                broadcasts = broadcastsList
+                                }
                             )
                         }
 
@@ -122,6 +144,12 @@ class MainActivity : ComponentActivity() {
                                 onBroadcastDispatched = { newAlert ->
                                     // Prepend the new broadcast to the top of the live feed
                                     broadcastsList.add(0, newAlert)
+                                },
+                                onViewResponseMap = { alertId ->
+                                    // Switch to HOME → Map tab with the broadcast alert preselected
+                                    mapPreselectedAlertId = alertId
+                                    currentTab = MainBottomTab.MAP
+                                    currentScreen = AppDestination.HOME
                                 }
                             )
                         }
@@ -129,5 +157,73 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+    }
+}
+
+/**
+ * HOME destination wrapper: hosts 3 bottom tabs (Home Dashboard, Alerts History, Map).
+ * All composables are kept in composition so the WebView and scroll states are preserved.
+ * Uses floating rounded top nav and bottom navigation bar where content flows gracefully behind them.
+ */
+@Composable
+private fun HomeWithTabs(
+    isDarkTheme: Boolean,
+    onToggleTheme: () -> Unit,
+    broadcasts: List<DisasterBroadcastRecord>,
+    repository: ResponsesRepository,
+    currentTab: MainBottomTab,
+    onTabSelected: (MainBottomTab) -> Unit,
+    mapPreselectedAlertId: Long?,
+    onNavigateToEmergencyAlert: () -> Unit
+) {
+    Box(modifier = Modifier.fillMaxSize()) {
+
+        // TAB 1: MAP TAB — kept in composition at all times so the WebView doesn't reload
+        Box(
+            modifier = if (currentTab == MainBottomTab.MAP) Modifier.fillMaxSize()
+            else Modifier.size(0.dp)
+        ) {
+            ResponseMapScreen(
+                repository = repository,
+                isTabVisible = currentTab == MainBottomTab.MAP,
+                isDarkTheme = isDarkTheme,
+                preselectedAlertId = mapPreselectedAlertId,
+                modifier = Modifier.fillMaxSize()
+            )
+        }
+
+        // TAB 2: ALERTS TAB — History & Live disaster alerts feed
+        Box(
+            modifier = if (currentTab == MainBottomTab.ALERTS) Modifier.fillMaxSize()
+            else Modifier.size(0.dp)
+        ) {
+            AlertsHistoryScreen(
+                isDarkTheme = isDarkTheme,
+                onToggleTheme = onToggleTheme,
+                broadcasts = broadcasts,
+                modifier = Modifier.fillMaxSize()
+            )
+        }
+
+        // TAB 3: HOME TAB — Emergency Incident Dashboard
+        Box(
+            modifier = if (currentTab == MainBottomTab.HOME) Modifier.fillMaxSize()
+            else Modifier.size(0.dp)
+        ) {
+            HomeDashboardScreen(
+                isDarkTheme = isDarkTheme,
+                onToggleTheme = onToggleTheme,
+                onNavigateToEmergencyAlert = onNavigateToEmergencyAlert,
+                broadcastsCount = broadcasts.size,
+                modifier = Modifier.fillMaxSize()
+            )
+        }
+
+        // Floating rounded bottom navigation bar (Content flows behind it)
+        DisasterBottomNavBar(
+            selectedTab = currentTab,
+            onTabSelected = onTabSelected,
+            modifier = Modifier.align(Alignment.BottomCenter)
+        )
     }
 }

@@ -2,12 +2,16 @@ package com.rustbeatz.disasteralert.data.network
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 import java.io.IOException
 import java.net.HttpURLConnection
 import java.net.URL
 import java.net.URLEncoder
+import com.rustbeatz.disasteralert.data.repo.AlertSummary
+import com.rustbeatz.disasteralert.data.repo.AlertResponsesResult
+import com.rustbeatz.disasteralert.data.repo.MockResponsesRepository
 
 /** Signed-in officer for this app session (held in memory; the backend restarts => sign in again). */
 object Session {
@@ -94,6 +98,48 @@ object BackendApi {
         )
     }
 
+    /**
+     * Fetch list of recent alerts from the backend.
+     */
+    suspend fun getAlerts(): List<AlertSummary> = withContext(Dispatchers.IO) {
+        val array = callArray("GET", "/api/alerts")
+        val list = mutableListOf<AlertSummary>()
+        for (i in 0 until array.length()) {
+            val obj = array.getJSONObject(i)
+            val dType = obj.optString("disasterType", "Disaster")
+            list.add(
+                AlertSummary(
+                    id = obj.optLong("id", i.toLong() + 1),
+                    alertCode = obj.optString("alertCode", "ALERT-${obj.optLong("id")}"),
+                    disasterType = dType,
+                    emoji = when (dType.lowercase()) {
+                        "flood" -> "🌊"
+                        "cyclone" -> "🌀"
+                        "landslide" -> "⛰️"
+                        "cloudburst" -> "⛈️"
+                        "earthquake" -> "🏚️"
+                        "fire" -> "🔥"
+                        "tsunami" -> "🌊"
+                        else -> "🚨"
+                    },
+                    severity = obj.optString("severity", "RED"),
+                    state = obj.optString("state", ""),
+                    district = obj.optString("district", ""),
+                    createdAt = obj.optString("createdAt", "")
+                )
+            )
+        }
+        list
+    }
+
+    /**
+     * Fetch real-time responses and citizen coordinates for an alert.
+     */
+    suspend fun getResponses(alertId: Long): AlertResponsesResult = withContext(Dispatchers.IO) {
+        val text = callRaw("GET", "/api/alerts/$alertId/responses?type=ALL")
+        MockResponsesRepository().parseResponsesJson(text, alertId)
+    }
+
     // ---------------------------------------------------------------- plumbing
 
     private fun enc(value: String): String = URLEncoder.encode(value, "UTF-8")
@@ -104,6 +150,26 @@ object BackendApi {
         body: JSONObject? = null,
         authenticated: Boolean = true
     ): JSONObject = withContext(Dispatchers.IO) {
+        val text = callRaw(method, path, body, authenticated)
+        JSONObject(text.ifBlank { "{}" })
+    }
+
+    private suspend fun callArray(
+        method: String,
+        path: String,
+        body: JSONObject? = null,
+        authenticated: Boolean = true
+    ): JSONArray = withContext(Dispatchers.IO) {
+        val text = callRaw(method, path, body, authenticated)
+        JSONArray(text.ifBlank { "[]" })
+    }
+
+    private suspend fun callRaw(
+        method: String,
+        path: String,
+        body: JSONObject? = null,
+        authenticated: Boolean = true
+    ): String = withContext(Dispatchers.IO) {
         val token = Session.token
         if (authenticated && token == null) {
             throw ApiException("Please sign in again.", unauthorized = true)
@@ -130,7 +196,7 @@ object BackendApi {
                 .orEmpty()
 
             if (code in 200..299) {
-                JSONObject(text.ifBlank { "{}" })
+                text
             } else {
                 val serverMessage = try {
                     JSONObject(text).optString("error")

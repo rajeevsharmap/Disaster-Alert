@@ -2,13 +2,40 @@ package com.rustbeatz.disasteralert.ui.theme
 
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
-import androidx.compose.ui.graphics.StrokeCap
-import androidx.compose.ui.graphics.StrokeJoin
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 
 object AppIcons {
+
+    val Home: ImageVector by lazy {
+        ImageVector.Builder(
+            name = "Home",
+            defaultWidth = 24.dp,
+            defaultHeight = 24.dp,
+            viewportWidth = 24f,
+            viewportHeight = 24f
+        ).apply {
+            path(
+                fill = SolidColor(Color.White),
+                stroke = null,
+                strokeLineWidth = 0f
+            ) {
+                moveTo(10f, 20f)
+                verticalLineTo(14f)
+                horizontalLineTo(14f)
+                verticalLineTo(20f)
+                horizontalLineTo(19f)
+                verticalLineTo(12f)
+                horizontalLineTo(22f)
+                lineTo(12f, 3f)
+                lineTo(2f, 12f)
+                horizontalLineTo(5f)
+                verticalLineTo(20f)
+                close()
+            }
+        }.build()
+    }
 
     val ArrowBack: ImageVector by lazy {
         ImageVector.Builder(
@@ -182,6 +209,186 @@ object AppIcons {
                 lineTo(18f, 10f)
                 lineTo(12f, 16f)
                 lineTo(6f, 10f)
+                close()
+            }
+        }.build()
+    }
+
+    val Map: ImageVector by lazy {
+        ImageVector.Builder(
+            name = "Map",
+            defaultWidth = 24.dp,
+            defaultHeight = 24.dp,
+            viewportWidth = 24f,
+            viewportHeight = 24f
+        ).apply {
+            path(
+                fill = SolidColor(Color.White),
+                stroke = null,
+                strokeLineWidth = 0f
+            ) {
+                moveTo(20.5f, 3f)
+                curveTo(20.2f, 3f, 19.9f, 3.1f, 19.7f, 3.2f)
+                lineTo(15f, 5.1f)
+                lineTo(9f, 3f)
+                lineTo(3.4f, 5.1f)
+                curveTo(3.1f, 5.2f, 3f, 5.5f, 3f, 5.8f)
+                verticalLineTo(20.5f)
+                curveTo(3f, 20.8f, 3.2f, 21f, 3.5f, 21f)
+                curveTo(3.6f, 21f, 3.7f, 21f, 3.8f, 20.9f)
+                lineTo(9f, 18.9f)
+                lineTo(15f, 21f)
+                lineTo(20.6f, 18.9f)
+                curveTo(20.8f, 18.8f, 21f, 18.5f, 21f, 18.2f)
+                verticalLineTo(3.5f)
+                curveTo(21f, 3.2f, 20.8f, 3f, 20.5f, 3f)
+                close()
+                moveTo(15f, 19.1f)
+                lineTo(9f, 17f)
+                verticalLineTo(4.9f)
+                lineTo(15f, 7f)
+                verticalLineTo(19.1f)
+                close()
+            }
+        }.build()
+    }
+
+    val Alerts: ImageVector by lazy {
+        ImageVector.Builder(
+            name = "Alerts",
+            defaultWidth = 24.dp,
+            defaultHeight = 24.dp,
+            viewportWidth = 24f,
+            viewportHeight = 24f
+        ).apply {
+            path(
+                fill = SolidColor(Color.White),
+                stroke = null,
+                strokeLineWidth = 0f
+            ) {
+                moveTo(12f, 22f)
+                curveTo(13.1f, 22f, 14f, 21.1f, 14f, 20f)
+                horizontalLineTo(10f)
+                curveTo(10f, 21.1f, 10.9f, 22f, 12f, 22f)
+                close()
+                moveTo(18f, 16f)
+                verticalLineTo(11f)
+                curveTo(18f, 7.93f, 16.37f, 5.36f, 13.5f, 4.68f)
+                verticalLineTo(4f)
+                curveTo(13.5f, 3.17f, 12.83f, 2.5f, 12f, 2.5f)
+                curveTo(11.17f, 2.5f, 10.5f, 3.17f, 10.5f, 4f)
+                verticalLineTo(4.68f)
+                curveTo(7.64f, 5.36f, 6f, 7.92f, 6f, 11f)
+                verticalLineTo(16f)
+                lineTo(4f, 18f)
+                verticalLineTo(19f)
+                horizontalLineTo(20f)
+                verticalLineTo(18f)
+                lineTo(18f, 16f)
+                close()
+            }
+        }.build()
+    }
+
+    val ExpandMore: ImageVector by lazy {
+        ImageVector.Builder(
+            name = "ExpandMore",
+            defaultWidth = 24.dp,
+            defaultHeight = 24.dp,
+            viewportWidth = 24f,
+            viewportHeight = 24f
+        ).apply {
+            path(
+                fill = SolidColor(Color.White),
+                stroke = null,
+                strokeLineWidth = 0f
+            ) {
+                moveTo(16.59f, 8.59f)
+                lineTo(12f, 13.17f)
+                lineTo(7.41f, 8.59f)
+                lineTo(6f, 10f)
+                lineTo(12f, 16f)
+                lineTo(18f, 10f)
+                close()
+            }
+        }.build()
+    }
+
+    val ExpandLess: ImageVector by lazy {
+        ImageVector.Builder(
+            name = "ExpandLess",
+            defaultWidth = 24.dp,
+            defaultHeight = 24.dp,
+            viewportWidth = 24f,
+            viewportHeight = 24f
+        ).apply {
+            path(
+                fill = SolidColor(Color.White),
+                stroke = null,
+                strokeLineWidth = 0f
+            ) {
+                moveTo(12f, 8f)
+                lineTo(6f, 14f)
+                lineTo(7.41f, 15.41f)
+                lineTo(12f, 10.83f)
+                lineTo(16.59f, 15.41f)
+                lineTo(18f, 14f)
+                close()
+            }
+        }.build()
+    }
+
+    val Navigation: ImageVector by lazy {
+        ImageVector.Builder(
+            name = "Navigation",
+            defaultWidth = 24.dp,
+            defaultHeight = 24.dp,
+            viewportWidth = 24f,
+            viewportHeight = 24f
+        ).apply {
+            path(
+                fill = SolidColor(Color.White),
+                stroke = null,
+                strokeLineWidth = 0f
+            ) {
+                moveTo(12f, 2f)
+                lineTo(4.5f, 20.29f)
+                lineTo(5.21f, 21f)
+                lineTo(12f, 18f)
+                lineTo(18.79f, 21f)
+                lineTo(19.5f, 20.29f)
+                close()
+            }
+        }.build()
+    }
+
+    val Refresh: ImageVector by lazy {
+        ImageVector.Builder(
+            name = "Refresh",
+            defaultWidth = 24.dp,
+            defaultHeight = 24.dp,
+            viewportWidth = 24f,
+            viewportHeight = 24f
+        ).apply {
+            path(
+                fill = SolidColor(Color.White),
+                stroke = null,
+                strokeLineWidth = 0f
+            ) {
+                moveTo(17.65f, 6.35f)
+                curveTo(16.2f, 4.9f, 14.21f, 4f, 12f, 4f)
+                curveTo(7.58f, 4f, 4.01f, 7.58f, 4.01f, 12f)
+                curveTo(4.01f, 16.42f, 7.58f, 20f, 12f, 20f)
+                curveTo(15.73f, 20f, 18.84f, 17.45f, 19.73f, 14f)
+                horizontalLineTo(17.65f)
+                curveTo(16.83f, 16.33f, 14.61f, 18f, 12f, 18f)
+                curveTo(8.69f, 18f, 6f, 15.31f, 6f, 12f)
+                curveTo(6f, 8.69f, 8.69f, 6f, 12f, 6f)
+                curveTo(13.66f, 6f, 15.14f, 6.69f, 16.22f, 7.78f)
+                lineTo(13f, 11f)
+                horizontalLineTo(20f)
+                verticalLineTo(4f)
+                lineTo(17.65f, 6.35f)
                 close()
             }
         }.build()

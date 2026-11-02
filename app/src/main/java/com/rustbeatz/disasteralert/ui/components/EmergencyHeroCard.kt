@@ -96,50 +96,29 @@ fun EmergencyHeroCard(
                 )
                 .padding(20.dp)
         ) {
-            // Telegram-style Top Meta Row
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
+            // Priority Badge with blinking beacon
+            Surface(
+                shape = RoundedCornerShape(12.dp),
+                color = EmergencyRed.copy(alpha = 0.12f),
+                border = androidx.compose.foundation.BorderStroke(1.dp, EmergencyRed.copy(alpha = 0.35f))
             ) {
-                // Priority Badge with blinking beacon
-                Surface(
-                    shape = RoundedCornerShape(12.dp),
-                    color = EmergencyRed.copy(alpha = 0.12f),
-                    border = androidx.compose.foundation.BorderStroke(1.dp, EmergencyRed.copy(alpha = 0.35f))
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.padding(horizontal = 10.dp, vertical = 5.dp)
                 ) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier.padding(horizontal = 10.dp, vertical = 5.dp)
-                    ) {
-                        Box(
-                            modifier = Modifier
-                                .size(8.dp)
-                                .alpha(pulseAlpha)
-                                .background(EmergencyRed, CircleShape)
-                        )
-                        Spacer(modifier = Modifier.width(6.dp))
-                        Text(
-                            text = "INCIDENT DISPATCH ACTIVE",
-                            color = EmergencyRed,
-                            fontSize = 11.sp,
-                            fontWeight = FontWeight.Bold,
-                            letterSpacing = 0.8.sp
-                        )
-                    }
-                }
-
-                // Official Seal Tag
-                Surface(
-                    shape = RoundedCornerShape(10.dp),
-                    color = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 0.6f)
-                ) {
+                    Box(
+                        modifier = Modifier
+                            .size(8.dp)
+                            .alpha(pulseAlpha)
+                            .background(EmergencyRed, CircleShape)
+                    )
+                    Spacer(modifier = Modifier.width(6.dp))
                     Text(
-                        text = "NDMA SECURE",
+                        text = "INCIDENT DISPATCH ACTIVE",
+                        color = EmergencyRed,
                         fontSize = 11.sp,
-                        fontWeight = FontWeight.SemiBold,
-                        color = MaterialTheme.colorScheme.onSecondaryContainer,
-                        modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+                        fontWeight = FontWeight.Bold,
+                        letterSpacing = 0.8.sp
                     )
                 }
             }
@@ -213,7 +192,7 @@ fun EmergencyHeroCard(
                 ),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(58.dp)
+                    .height(54.dp)
                     .scale(buttonScale)
             ) {
                 Row(
@@ -224,27 +203,17 @@ fun EmergencyHeroCard(
                         imageVector = AppIcons.Warning,
                         contentDescription = "Alert Icon",
                         tint = Color.White,
-                        modifier = Modifier.size(22.dp)
+                        modifier = Modifier.size(20.dp)
                     )
                     Spacer(modifier = Modifier.width(10.dp))
-                    Column(horizontalAlignment = Alignment.Start) {
-                        Text(
-                            text = "ISSUE EMERGENCY ALERT",
-                            style = MaterialTheme.typography.labelLarge.copy(
-                                fontWeight = FontWeight.ExtraBold,
-                                letterSpacing = 1.sp,
-                                fontSize = 14.sp
-                            )
+                    Text(
+                        text = "EMERGENCY ALERT",
+                        style = MaterialTheme.typography.labelLarge.copy(
+                            fontWeight = FontWeight.Bold,
+                            letterSpacing = 1.sp,
+                            fontSize = 15.sp
                         )
-                        Text(
-                            text = "Filter State, District & City • Launch Full Broadcast",
-                            style = MaterialTheme.typography.bodySmall.copy(
-                                fontSize = 10.5.sp,
-                                fontWeight = FontWeight.Normal
-                            ),
-                            color = Color.White.copy(alpha = 0.9f)
-                        )
-                    }
+                    )
                 }
             }
         }

@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -27,30 +28,37 @@ import com.rustbeatz.disasteralert.ui.theme.AppIcons
 fun TelegramTopAppBar(
     isDarkTheme: Boolean,
     onToggleTheme: () -> Unit,
+    title: String = "DisasterAlert",
+    subtitle: String = "Incident Command",
     modifier: Modifier = Modifier
 ) {
     Surface(
-        color = MaterialTheme.colorScheme.surface,
-        tonalElevation = 2.dp,
-        shadowElevation = 1.dp,
+        color = MaterialTheme.colorScheme.surface.copy(alpha = 0.95f),
+        shape = RoundedCornerShape(bottomStart = 22.dp, bottomEnd = 22.dp),
+        tonalElevation = 4.dp,
+        shadowElevation = 4.dp,
+        border = androidx.compose.foundation.BorderStroke(
+            width = 1.dp,
+            color = MaterialTheme.colorScheme.outline.copy(alpha = 0.25f)
+        ),
         modifier = modifier.fillMaxWidth()
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 12.dp)
+                .padding(horizontal = 16.dp, vertical = 10.dp)
         ) {
             // Telegram-style channel / authority avatar
             Surface(
                 shape = CircleShape,
                 color = MaterialTheme.colorScheme.primaryContainer,
-                modifier = Modifier.size(42.dp)
+                modifier = Modifier.size(38.dp)
             ) {
                 Box(contentAlignment = Alignment.Center) {
                     Text(
                         text = "🚨",
-                        fontSize = 20.sp
+                        fontSize = 18.sp
                     )
                 }
             }
@@ -61,17 +69,17 @@ fun TelegramTopAppBar(
             Column(modifier = Modifier.weight(1f)) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(
-                        text = "DisasterAlert",
+                        text = title,
                         style = MaterialTheme.typography.titleMedium.copy(
                             fontWeight = FontWeight.Bold,
-                            fontSize = 17.sp
+                            fontSize = 16.5.sp
                         ),
                         color = MaterialTheme.colorScheme.onSurface
                     )
                     Spacer(modifier = Modifier.width(6.dp))
                     Text(
                         text = "✓",
-                        fontSize = 13.sp,
+                        fontSize = 12.sp,
                         fontWeight = FontWeight.Bold,
                         color = MaterialTheme.colorScheme.primary
                     )
@@ -79,17 +87,17 @@ fun TelegramTopAppBar(
 
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.padding(top = 2.dp)
+                    modifier = Modifier.padding(top = 1.dp)
                 ) {
                     Box(
                         modifier = Modifier
-                            .size(7.dp)
+                            .size(6.dp)
                             .background(MaterialTheme.colorScheme.primary, CircleShape)
                     )
-                    Spacer(modifier = Modifier.width(6.dp))
+                    Spacer(modifier = Modifier.width(5.dp))
                     Text(
-                        text = "Live National Alert Hub • 36 States",
-                        style = MaterialTheme.typography.bodySmall.copy(fontSize = 12.sp),
+                        text = subtitle,
+                        style = MaterialTheme.typography.bodySmall.copy(fontSize = 11.5.sp),
                         color = MaterialTheme.colorScheme.primary
                     )
                 }
@@ -98,23 +106,11 @@ fun TelegramTopAppBar(
             // Theme Switcher (Sun / Moon)
             IconButton(
                 onClick = onToggleTheme,
-                modifier = Modifier.size(38.dp)
+                modifier = Modifier.size(36.dp)
             ) {
                 Text(
                     text = if (isDarkTheme) "☀️" else "🌙",
-                    fontSize = 18.sp
-                )
-            }
-
-            // Search Icon
-            IconButton(
-                onClick = { /* Search alerts */ },
-                modifier = Modifier.size(38.dp)
-            ) {
-                Icon(
-                    imageVector = AppIcons.Search,
-                    contentDescription = "Search Alerts",
-                    tint = MaterialTheme.colorScheme.onSurfaceVariant
+                    fontSize = 16.sp
                 )
             }
         }

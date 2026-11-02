@@ -123,46 +123,25 @@ fun TelegramAlertCard(
 
             Spacer(modifier = Modifier.height(12.dp))
 
-            // Telegram-Style Meta Row (Timestamp, Authority ID, Double Checkmark)
+            // Telegram-Style Meta Row (Timestamp, Double Checkmark)
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
+                horizontalArrangement = Arrangement.End
             ) {
-                // Authority Tag
-                Surface(
-                    shape = RoundedCornerShape(6.dp),
-                    color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.6f)
-                ) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
-                    ) {
-                        Text(
-                            text = "🛡️ ${record.authorityId}",
-                            fontSize = 10.5.sp,
-                            fontWeight = FontWeight.SemiBold,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
-                    }
-                }
-
-                // Telegram-style Timestamp with Double Ticks
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text(
-                        text = record.timestamp,
-                        fontSize = 11.sp,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.8f)
-                    )
-                    Spacer(modifier = Modifier.width(4.dp))
-                    // Double check marks
-                    Text(
-                        text = "✓✓",
-                        fontSize = 12.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = MaterialTheme.colorScheme.primary
-                    )
-                }
+                Text(
+                    text = record.timestamp,
+                    fontSize = 11.sp,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.8f)
+                )
+                Spacer(modifier = Modifier.width(4.dp))
+                // Double check marks
+                Text(
+                    text = "✓✓",
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.primary
+                )
             }
         }
     }

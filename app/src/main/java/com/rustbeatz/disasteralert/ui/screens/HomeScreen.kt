@@ -6,6 +6,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,12 +14,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -30,108 +31,237 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.rustbeatz.disasteralert.data.DisasterBroadcastRecord
-import com.rustbeatz.disasteralert.ui.common.SafeAreaContainer
 import com.rustbeatz.disasteralert.ui.components.EmergencyHeroCard
 import com.rustbeatz.disasteralert.ui.components.TelegramAlertCard
 import com.rustbeatz.disasteralert.ui.components.TelegramTopAppBar
 
+/**
+ * HOME TAB: Emergency Incident Dashboard
+ * Premium Telegram-style layout where scrollable content gracefully flows
+ * behind the floating rounded top bar and bottom navigation bar.
+ */
 @Composable
-fun HomeScreen(
+fun HomeDashboardScreen(
     isDarkTheme: Boolean,
     onToggleTheme: () -> Unit,
     onNavigateToEmergencyAlert: () -> Unit,
+    broadcastsCount: Int,
+    modifier: Modifier = Modifier
+) {
+    Box(
+        modifier = modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
+    ) {
+        // Content flows smoothly behind the floating top bar and bottom bar
+        LazyColumn(
+            modifier = Modifier.fillMaxSize(),
+            contentPadding = PaddingValues(
+                top = 82.dp,
+                bottom = 100.dp,
+                start = 16.dp,
+                end = 16.dp
+            )
+        ) {
+            item {
+                Spacer(modifier = Modifier.height(6.dp))
+
+                // Emergency Hero Card with uncluttered "EMERGENCY ALERT" button
+                EmergencyHeroCard(
+                    onEmergencyAlertClick = onNavigateToEmergencyAlert
+                )
+
+                Spacer(modifier = Modifier.height(20.dp))
+
+                // Quick Services row
+                QuickActionSection()
+
+                Spacer(modifier = Modifier.height(20.dp))
+
+                // Operational Status Card
+                OperationalStatusCard(broadcastsCount = broadcastsCount)
+
+                Spacer(modifier = Modifier.height(16.dp))
+            }
+        }
+
+        // Floating rounded Top Nav Bar
+        TelegramTopAppBar(
+            isDarkTheme = isDarkTheme,
+            onToggleTheme = onToggleTheme,
+            title = "DisasterAlert",
+            subtitle = "Incident Dashboard",
+            modifier = Modifier
+                .align(Alignment.TopCenter)
+                .statusBarsPadding()
+                .padding(horizontal = 12.dp, vertical = 4.dp)
+        )
+    }
+}
+
+/**
+ * ALERTS TAB: History of disaster alerts & live broadcast feed
+ */
+@Composable
+fun AlertsHistoryScreen(
+    isDarkTheme: Boolean,
+    onToggleTheme: () -> Unit,
     broadcasts: List<DisasterBroadcastRecord>,
     modifier: Modifier = Modifier
 ) {
-    SafeAreaContainer(modifier = modifier) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(MaterialTheme.colorScheme.background)
-        ) {
-            // Telegram-style Top App Bar with live badge & light/dark theme switch
-            TelegramTopAppBar(
-                isDarkTheme = isDarkTheme,
-                onToggleTheme = onToggleTheme
+    Box(
+        modifier = modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
+    ) {
+        LazyColumn(
+            modifier = Modifier.fillMaxSize(),
+            contentPadding = PaddingValues(
+                top = 82.dp,
+                bottom = 100.dp,
+                start = 16.dp,
+                end = 16.dp
             )
+        ) {
+            item {
+                Spacer(modifier = Modifier.height(8.dp))
 
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(horizontal = 16.dp)
-            ) {
-                item {
-                    Spacer(modifier = Modifier.height(16.dp))
-
-                    // MAIN TASK: Top Main Card with Emergency Alert Button defining its work
-                    EmergencyHeroCard(
-                        onEmergencyAlertClick = onNavigateToEmergencyAlert
-                    )
-
-                    Spacer(modifier = Modifier.height(20.dp))
-
-                    // Quick Action Civil Defence Row (Telegram channel quick access)
-                    QuickActionSection()
-
-                    Spacer(modifier = Modifier.height(20.dp))
-
-                    // Feed Section Title
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            Text(
-                                text = "LIVE DISASTER BROADCAST FEED",
-                                style = MaterialTheme.typography.labelLarge.copy(
-                                    fontWeight = FontWeight.ExtraBold,
-                                    letterSpacing = 0.8.sp,
-                                    fontSize = 12.sp
-                                ),
-                                color = MaterialTheme.colorScheme.onSurfaceVariant
-                            )
-                            Spacer(modifier = Modifier.width(6.dp))
-                            Surface(
-                                shape = CircleShape,
-                                color = MaterialTheme.colorScheme.primaryContainer,
-                                modifier = Modifier.size(20.dp)
-                            ) {
-                                Box(contentAlignment = Alignment.Center) {
-                                    Text(
-                                        text = "${broadcasts.size}",
-                                        fontSize = 10.sp,
-                                        fontWeight = FontWeight.Bold,
-                                        color = MaterialTheme.colorScheme.onPrimaryContainer
-                                    )
-                                }
+                // Clean Feed Section Header (without "Real-time NDMA Mesh")
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Text(
+                            text = "LIVE DISASTER BROADCAST FEED",
+                            style = MaterialTheme.typography.labelLarge.copy(
+                                fontWeight = FontWeight.Bold,
+                                letterSpacing = 0.8.sp,
+                                fontSize = 12.sp
+                            ),
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Surface(
+                            shape = CircleShape,
+                            color = MaterialTheme.colorScheme.primaryContainer,
+                            modifier = Modifier.size(22.dp)
+                        ) {
+                            Box(contentAlignment = Alignment.Center) {
+                                Text(
+                                    text = "${broadcasts.size}",
+                                    fontSize = 10.5.sp,
+                                    fontWeight = FontWeight.Bold,
+                                    color = MaterialTheme.colorScheme.onPrimaryContainer
+                                )
                             }
                         }
-
-                        Text(
-                            text = "Real-time NDMA Mesh",
-                            fontSize = 11.5.sp,
-                            color = MaterialTheme.colorScheme.primary,
-                            fontWeight = FontWeight.SemiBold
-                        )
                     }
-
-                    Spacer(modifier = Modifier.height(12.dp))
                 }
 
-                // Telegram Alert Feed Items
-                items(broadcasts, key = { it.id }) { alertItem ->
-                    TelegramAlertCard(
-                        record = alertItem,
-                        modifier = Modifier.padding(bottom = 12.dp)
-                    )
-                }
+                Spacer(modifier = Modifier.height(14.dp))
+            }
 
-                item {
-                    Spacer(modifier = Modifier.height(24.dp))
-                }
+            // Telegram Alert Cards (uncluttered, without authority id tag)
+            items(broadcasts, key = { it.id }) { alertItem ->
+                TelegramAlertCard(
+                    record = alertItem,
+                    modifier = Modifier.padding(bottom = 12.dp)
+                )
             }
         }
+
+        // Floating rounded Top Nav Bar for Alerts Tab
+        TelegramTopAppBar(
+            isDarkTheme = isDarkTheme,
+            onToggleTheme = onToggleTheme,
+            title = "Broadcast Feed",
+            subtitle = "Alerts History",
+            modifier = Modifier
+                .align(Alignment.TopCenter)
+                .statusBarsPadding()
+                .padding(horizontal = 12.dp, vertical = 4.dp)
+        )
+    }
+}
+
+@Composable
+private fun OperationalStatusCard(broadcastsCount: Int) {
+    Surface(
+        shape = RoundedCornerShape(18.dp),
+        color = MaterialTheme.colorScheme.surface,
+        border = androidx.compose.foundation.BorderStroke(
+            width = 1.dp,
+            color = MaterialTheme.colorScheme.outline.copy(alpha = 0.35f)
+        ),
+        tonalElevation = 2.dp,
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        Column(modifier = Modifier.padding(16.dp)) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(
+                    text = "NETWORK READINESS",
+                    fontSize = 11.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.primary,
+                    letterSpacing = 0.8.sp
+                )
+                Surface(
+                    shape = RoundedCornerShape(8.dp),
+                    color = MaterialTheme.colorScheme.primaryContainer
+                ) {
+                    Text(
+                        text = "READY",
+                        fontSize = 10.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.onPrimaryContainer,
+                        modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
+                    )
+                }
+            }
+
+            Spacer(modifier = Modifier.height(10.dp))
+
+            Text(
+                text = "Two-way civil response coordination is active. Handsets and emergency teams in target sectors receive priority dispatch sirens.",
+                fontSize = 12.5.sp,
+                lineHeight = 18.sp,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+
+            Spacer(modifier = Modifier.height(12.dp))
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                StatusMetric(label = "Active Broadcasts", value = "$broadcastsCount")
+                StatusMetric(label = "Siren Network", value = "Operational")
+                StatusMetric(label = "Coverage", value = "36 States & UTs")
+            }
+        }
+    }
+}
+
+@Composable
+private fun StatusMetric(label: String, value: String) {
+    Column {
+        Text(
+            text = value,
+            fontSize = 13.sp,
+            fontWeight = FontWeight.Bold,
+            color = MaterialTheme.colorScheme.onSurface
+        )
+        Text(
+            text = label,
+            fontSize = 10.5.sp,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
     }
 }
 

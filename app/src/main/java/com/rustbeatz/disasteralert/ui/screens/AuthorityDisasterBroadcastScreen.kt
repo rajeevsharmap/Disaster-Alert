@@ -29,6 +29,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Surface
@@ -73,6 +74,7 @@ fun AuthorityDisasterBroadcastScreen(
     onNavigateBack: () -> Unit,
     onBroadcastDispatched: (DisasterBroadcastRecord) -> Unit,
     onSessionExpired: () -> Unit = {},
+    onViewResponseMap: ((Long) -> Unit)? = null,
     modifier: Modifier = Modifier
 ) {
     // Form States
@@ -194,6 +196,12 @@ fun AuthorityDisasterBroadcastScreen(
                     onDone = {
                         showSuccessConfirmation = false
                         onNavigateBack()
+                    },
+                    onViewResponseMap = onViewResponseMap?.let { callback ->
+                        { alertId ->
+                            showSuccessConfirmation = false
+                            callback(alertId)
+                        }
                     }
                 )
             } else {
@@ -577,7 +585,8 @@ private fun SeverityOptionPill(
 private fun BroadcastSuccessView(
     record: DisasterBroadcastRecord,
     result: DispatchResult?,
-    onDone: () -> Unit
+    onDone: () -> Unit,
+    onViewResponseMap: ((Long) -> Unit)? = null
 ) {
     val subtitle = when {
         result == null -> "Alert dispatched to ${record.district}, ${record.state}."
@@ -699,6 +708,29 @@ private fun BroadcastSuccessView(
                 fontWeight = FontWeight.Bold,
                 fontSize = 14.sp
             )
+        }
+
+        if (onViewResponseMap != null && result != null) {
+            Spacer(modifier = Modifier.height(12.dp))
+            OutlinedButton(
+                onClick = { onViewResponseMap(result.id) },
+                shape = RoundedCornerShape(16.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(52.dp)
+            ) {
+                Icon(
+                    imageVector = AppIcons.Map,
+                    contentDescription = null,
+                    modifier = Modifier.size(18.dp)
+                )
+                Spacer(modifier = Modifier.width(8.dp))
+                Text(
+                    text = "VIEW RESPONSE MAP",
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 13.5.sp
+                )
+            }
         }
     }
 }
