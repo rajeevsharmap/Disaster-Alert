@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <style name="Theme.DisasterAlert" parent="android:Theme.Material.Light.NoActionBar">
+        <!-- Status Bar & Navigation Bar Colors for Light Theme (Near Green) -->
+        <item name="android:statusBarColor">#F3F7F5</item>
+        <item name="android:navigationBarColor">#F3F7F5</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="27">true</item>
+        <item name="android:windowSplashScreenBackground" tools:targetApi="31">#F3F7F5</item>
+        <item name="android:windowSplashScreenAnimatedIcon" tools:targetApi="31">@drawable/ic_disaster_shield</item>
+    </style>
+</resources>

@@ -1,0 +1,64 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="120dp"
+    android:height="120dp"
+    android:viewportWidth="120"
+    android:viewportHeight="120">
+    
+    <!-- Outer Emergency Radar Pulse Ring -->
+    <path
+        android:pathData="M60,10 C87.6,10 110,32.4 110,60 C110,87.6 87.6,110 60,110 C32.4,110 10,87.6 10,60 C10,32.4 32.4,10 60,10 Z"
+        android:strokeColor="#10B981"
+        android:strokeWidth="2"
+        android:strokeAlpha="0.35" />
+
+    <path
+        android:pathData="M60,18 C83.2,18 102,36.8 102,60 C102,83.2 83.2,102 60,102 C36.8,102 18,83.2 18,60 C18,36.8 36.8,18 60,18 Z"
+        android:strokeColor="#34D399"
+        android:strokeWidth="1.5"
+        android:strokeAlpha="0.5" />
+
+    <!-- Protective Shield Body -->
+    <path
+        android:pathData="M60,24 L90,38 C90,74 75,94 60,104 C45,94 30,74 30,38 Z"
+        android:fillColor="#0D7C59" />
+
+    <!-- Shield Inner Core Depth -->
+    <path
+        android:pathData="M60,29 L85,41 C85,71.5 72,89 60,98 C48,89 35,71.5 35,41 Z"
+        android:fillColor="#064E3B" />
+
+    <!-- Half Sheen Highlight -->
+    <path
+        android:pathData="M60,29 L85,41 C85,71.5 72,89 60,98 Z"
+        android:fillColor="#34D399"
+        android:fillAlpha="0.22" />
+
+    <!-- Emergency Warning Heraldry (Triangle) -->
+    <path
+        android:pathData="M60,42 L77,72 L43,72 Z"
+        android:fillColor="#F59E0B" />
+
+    <path
+        android:pathData="M60,48 L73,70 L47,70 Z"
+        android:fillColor="#B45309" />
+
+    <!-- Exclamation mark in warning triangle -->
+    <path
+        android:pathData="M58.5,52 L61.5,52 L61,63 L59,63 Z"
+        android:fillColor="#FFFFFF" />
+    <path
+        android:pathData="M58.5,65.5 L61.5,65.5 L61.5,68.5 L58.5,68.5 Z"
+        android:fillColor="#FFFFFF" />
+
+    <!-- Satellite / Radar Beacons on left and right -->
+    <path
+        android:pathData="M24,54 C21,57 21,63 24,66"
+        android:strokeColor="#34D399"
+        android:strokeWidth="3"
+        android:strokeLineCap="round" />
+    <path
+        android:pathData="M96,54 C99,57 99,63 96,66"
+        android:strokeColor="#34D399"
+        android:strokeWidth="3"
+        android:strokeLineCap="round" />
+</vector>

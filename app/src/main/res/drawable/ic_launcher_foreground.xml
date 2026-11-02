@@ -1,0 +1,47 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    
+    <!-- Protective Disaster Management Shield Base -->
+    <path
+        android:pathData="M54,22 L78,33 C78,61 66,77 54,86 C42,77 30,61 30,33 Z"
+        android:fillColor="#0D7C59" />
+
+    <!-- Inner Shield Accent -->
+    <path
+        android:pathData="M54,26 L74,35.5 C74,59 63.5,73 54,81.5 C44.5,73 34,59 34,35.5 Z"
+        android:fillColor="#064E3B" />
+
+    <!-- Right Shield Highlight -->
+    <path
+        android:pathData="M54,26 L74,35.5 C74,59 63.5,73 54,81.5 Z"
+        android:fillColor="#10B981"
+        android:fillAlpha="0.25" />
+
+    <!-- Emergency Beacon Warning Triangle -->
+    <path
+        android:pathData="M54,37 L69,65 L39,65 Z"
+        android:fillColor="#FBBF24" />
+
+    <!-- Inner Triangle Core -->
+    <path
+        android:pathData="M54,43 L65,63 L43,63 Z"
+        android:fillColor="#D97706" />
+
+    <!-- Alert Exclamation Mark In Triangle -->
+    <!-- Stem -->
+    <path
+        android:pathData="M52.5,47 L55.5,47 L55,57 L53,57 Z"
+        android:fillColor="#FFFFFF" />
+    <!-- Dot -->
+    <path
+        android:pathData="M52.5,59 L55.5,59 L55.5,61.5 L52.5,61.5 Z"
+        android:fillColor="#FFFFFF" />
+
+    <!-- Emergency Pulse Star / Beacon at Top of Shield -->
+    <path
+        android:pathData="M54,17 L56,21 L60,23 L56,25 L54,29 L52,25 L48,23 L52,21 Z"
+        android:fillColor="#34D399" />
+</vector>
