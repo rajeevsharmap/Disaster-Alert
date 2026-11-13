@@ -1,0 +1,18 @@
+{
+  "status": "COMPLETED",
+  "sceneSummary": "Mud and rock across a two-lane road, no vehicles visible.",
+  "suggestedCategory": "LANDSLIDE",
+  "hazard": "Road blocked by landslide",
+  "severity": "ORANGE",
+  "consistency": "CONSISTENT",
+  "confidence": 0.78,
+  "caveats": ["Photo shows no scale", "Location not verified against EXIF"],
+  "draftAlert": {
+    "title": "Road blocked near Kollur",
+    "message": "A landslide is blocking the road near Kollur bridge.",
+    "instructions": ["Do not use this road", "Use the alternate route via ..."]
+  },
+  "model": "gemini-2.5-flash",
+  "promptVersion": "v1",
+  "analyzedAt": "2026-11-03T08:12:41Z"
+}

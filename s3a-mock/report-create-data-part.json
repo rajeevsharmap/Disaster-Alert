@@ -1,0 +1,13 @@
+{
+  "clientReportId": "b3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+  "category": "ROAD_BLOCKED",
+  "note": "Landslide across the road near the bridge",
+  "state": "Karnataka",
+  "district": "Udupi",
+  "city": "Kollur",
+  "latitude": 13.8626,
+  "longitude": 74.8147,
+  "accuracyM": 12.5,
+  "capturedAt": "2026-11-02T05:41:12Z",
+  "mockLocation": false
+}

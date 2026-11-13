@@ -45,6 +45,8 @@ fun HomeDashboardScreen(
     isDarkTheme: Boolean,
     onToggleTheme: () -> Unit,
     onNavigateToEmergencyAlert: () -> Unit,
+    onNavigateToReports: () -> Unit = {},
+    onNavigateToReporters: () -> Unit = {},
     broadcastsCount: Int,
     modifier: Modifier = Modifier
 ) {
@@ -69,6 +71,14 @@ fun HomeDashboardScreen(
                 // Emergency Hero Card with uncluttered "EMERGENCY ALERT" button
                 EmergencyHeroCard(
                     onEmergencyAlertClick = onNavigateToEmergencyAlert
+                )
+
+                Spacer(modifier = Modifier.height(20.dp))
+
+                // Field Reports & Reporter Management (Slice S3a)
+                FieldCoordinationSection(
+                    onReportsClick = onNavigateToReports,
+                    onReportersClick = onNavigateToReporters
                 )
 
                 Spacer(modifier = Modifier.height(20.dp))
@@ -341,6 +351,130 @@ private fun QuickServicePill(
                 fontSize = 10.sp,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
+        }
+    }
+}
+
+@Composable
+private fun FieldCoordinationSection(
+    onReportsClick: () -> Unit,
+    onReportersClick: () -> Unit
+) {
+    Column(modifier = Modifier.fillMaxWidth()) {
+        Text(
+            text = "FIELD INCIDENT RESPONSE (REPORTS & AGENTS)",
+            style = MaterialTheme.typography.labelSmall.copy(
+                fontWeight = FontWeight.Bold,
+                letterSpacing = 0.8.sp,
+                fontSize = 11.sp
+            ),
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(10.dp)
+        ) {
+            Surface(
+                modifier = Modifier
+                    .weight(1f)
+                    .clip(RoundedCornerShape(16.dp))
+                    .clickable { onReportsClick() }
+                    .border(
+                        1.dp,
+                        MaterialTheme.colorScheme.outline.copy(alpha = 0.35f),
+                        RoundedCornerShape(16.dp)
+                    ),
+                color = MaterialTheme.colorScheme.surface,
+                shape = RoundedCornerShape(16.dp)
+            ) {
+                Column(modifier = Modifier.padding(14.dp)) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Text(text = "📸", fontSize = 22.sp)
+                        Surface(
+                            shape = RoundedCornerShape(6.dp),
+                            color = MaterialTheme.colorScheme.primaryContainer
+                        ) {
+                            Text(
+                                text = "QUEUE",
+                                fontSize = 9.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = MaterialTheme.colorScheme.onPrimaryContainer,
+                                modifier = Modifier.padding(horizontal = 5.dp, vertical = 2.dp)
+                            )
+                        }
+                    }
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Text(
+                        text = "Field Reports",
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 14.sp,
+                        color = MaterialTheme.colorScheme.onSurface
+                    )
+                    Spacer(modifier = Modifier.height(2.dp))
+                    Text(
+                        text = "EXIF audit, GPS verification & photo evidence review",
+                        fontSize = 11.sp,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        lineHeight = 15.sp
+                    )
+                }
+            }
+
+            Surface(
+                modifier = Modifier
+                    .weight(1f)
+                    .clip(RoundedCornerShape(16.dp))
+                    .clickable { onReportersClick() }
+                    .border(
+                        1.dp,
+                        MaterialTheme.colorScheme.outline.copy(alpha = 0.35f),
+                        RoundedCornerShape(16.dp)
+                    ),
+                color = MaterialTheme.colorScheme.surface,
+                shape = RoundedCornerShape(16.dp)
+            ) {
+                Column(modifier = Modifier.padding(14.dp)) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Text(text = "👥", fontSize = 22.sp)
+                        Surface(
+                            shape = RoundedCornerShape(6.dp),
+                            color = MaterialTheme.colorScheme.secondaryContainer
+                        ) {
+                            Text(
+                                text = "AUTH",
+                                fontSize = 9.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = MaterialTheme.colorScheme.onSecondaryContainer,
+                                modifier = Modifier.padding(horizontal = 5.dp, vertical = 2.dp)
+                            )
+                        }
+                    }
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Text(
+                        text = "Field Reporters",
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 14.sp,
+                        color = MaterialTheme.colorScheme.onSurface
+                    )
+                    Spacer(modifier = Modifier.height(2.dp))
+                    Text(
+                        text = "Register & manage sector agents (POST /api/users)",
+                        fontSize = 11.sp,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        lineHeight = 15.sp
+                    )
+                }
+            }
         }
     }
 }

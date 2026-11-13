@@ -39,11 +39,24 @@ import com.rustbeatz.disasteralert.ui.screens.OfficerLoginScreen
 import com.rustbeatz.disasteralert.ui.screens.map.ResponseMapScreen
 import com.rustbeatz.disasteralert.ui.theme.DisasterAlertTheme
 
+import com.rustbeatz.disasteralert.data.repo.NetworkReportsRepository
+import com.rustbeatz.disasteralert.data.repo.ReportsRepository
+import com.rustbeatz.disasteralert.ui.screens.authority.AuthorityReportsScreen
+import com.rustbeatz.disasteralert.ui.screens.authority.AuthorityReportersScreen
+import com.rustbeatz.disasteralert.ui.screens.authority.ReportDetailScreen
+import com.rustbeatz.disasteralert.ui.screens.reporter.NewReportScreen
+import com.rustbeatz.disasteralert.ui.screens.reporter.ReporterShellScreen
+
 enum class AppDestination {
     SPLASH,
     LOGIN,
-    HOME,
-    AUTHORITY_DISPATCH
+    AUTHORITY_HOME,
+    AUTHORITY_DISPATCH,
+    AUTHORITY_REPORTS,
+    AUTHORITY_REPORT_DETAIL,
+    AUTHORITY_REPORTERS,
+    REPORTER_HOME,
+    REPORTER_NEW_REPORT
 }
 
 class MainActivity : ComponentActivity() {
@@ -62,6 +75,7 @@ class MainActivity : ComponentActivity() {
             // Tab state: defaults to HOME (Emergency Dashboard)
             var currentTab by remember { mutableStateOf(MainBottomTab.HOME) }
             var mapPreselectedAlertId by remember { mutableStateOf<Long?>(null) }
+            var selectedReportDetailId by remember { mutableStateOf<Long?>(null) }
 
             // Live broadcast alert feed initialized with realistic NDMA records
             val broadcastsList = remember {
@@ -73,6 +87,9 @@ class MainActivity : ComponentActivity() {
             // Live repository with automatic mock fallback when offline
             val repository: ResponsesRepository = remember { NetworkResponsesRepository() }
 
+            // Slice S3a: Reports repository backed by real BackendApi with AppConfig.USE_MOCK_REPORTS toggle
+            val reportsRepository: ReportsRepository = remember { NetworkReportsRepository() }
+
             DisasterAlertTheme(
                 darkTheme = isDarkTheme,
                 dynamicColor = false // Keep our custom near-green dual theme active
@@ -81,11 +98,19 @@ class MainActivity : ComponentActivity() {
                     targetState = currentScreen,
                     transitionSpec = {
                         when {
-                            targetState == AppDestination.AUTHORITY_DISPATCH -> {
+                            targetState == AppDestination.AUTHORITY_DISPATCH ||
+                            targetState == AppDestination.REPORTER_NEW_REPORT ||
+                            targetState == AppDestination.AUTHORITY_REPORTS ||
+                            targetState == AppDestination.AUTHORITY_REPORTERS ||
+                            targetState == AppDestination.AUTHORITY_REPORT_DETAIL -> {
                                 (slideInHorizontally { width -> width } + fadeIn())
                                     .togetherWith(slideOutHorizontally { width -> -width / 3 } + fadeOut())
                             }
-                            initialState == AppDestination.AUTHORITY_DISPATCH -> {
+                            initialState == AppDestination.AUTHORITY_DISPATCH ||
+                            initialState == AppDestination.REPORTER_NEW_REPORT ||
+                            initialState == AppDestination.AUTHORITY_REPORTS ||
+                            initialState == AppDestination.AUTHORITY_REPORTERS ||
+                            initialState == AppDestination.AUTHORITY_REPORT_DETAIL -> {
                                 (slideInHorizontally { width -> -width / 3 } + fadeIn())
                                     .togetherWith(slideOutHorizontally { width -> width } + fadeOut())
                             }
@@ -101,8 +126,11 @@ class MainActivity : ComponentActivity() {
                         AppDestination.SPLASH -> {
                             DisasterSplashScreen(
                                 onSplashFinished = {
-                                    // Officers must sign in before reaching the incident monitor
-                                    currentScreen = if (Session.token != null) AppDestination.HOME else AppDestination.LOGIN
+                                    currentScreen = when {
+                                        Session.token == null -> AppDestination.LOGIN
+                                        Session.isReporter -> AppDestination.REPORTER_HOME
+                                        else -> AppDestination.AUTHORITY_HOME
+                                    }
                                 }
                             )
                         }
@@ -110,12 +138,16 @@ class MainActivity : ComponentActivity() {
                         AppDestination.LOGIN -> {
                             OfficerLoginScreen(
                                 onLoggedIn = {
-                                    currentScreen = AppDestination.HOME
+                                    currentScreen = if (Session.isReporter) {
+                                        AppDestination.REPORTER_HOME
+                                    } else {
+                                        AppDestination.AUTHORITY_HOME
+                                    }
                                 }
                             )
                         }
 
-                        AppDestination.HOME -> {
+                        AppDestination.AUTHORITY_HOME -> {
                             // Three bottom tabs: HOME (Dashboard), ALERTS (Feed/History), MAP (Help Map)
                             HomeWithTabs(
                                 isDarkTheme = isDarkTheme,
@@ -127,6 +159,12 @@ class MainActivity : ComponentActivity() {
                                 mapPreselectedAlertId = mapPreselectedAlertId,
                                 onNavigateToEmergencyAlert = {
                                     currentScreen = AppDestination.AUTHORITY_DISPATCH
+                                },
+                                onNavigateToReports = {
+                                    currentScreen = AppDestination.AUTHORITY_REPORTS
+                                },
+                                onNavigateToReporters = {
+                                    currentScreen = AppDestination.AUTHORITY_REPORTERS
                                 }
                             )
                         }
@@ -134,22 +172,84 @@ class MainActivity : ComponentActivity() {
                         AppDestination.AUTHORITY_DISPATCH -> {
                             AuthorityDisasterBroadcastScreen(
                                 onNavigateBack = {
-                                    currentScreen = AppDestination.HOME
+                                    currentScreen = AppDestination.AUTHORITY_HOME
                                 },
                                 onSessionExpired = {
-                                    // Backend restarted or token rejected: sign in again
                                     Session.clear()
                                     currentScreen = AppDestination.LOGIN
                                 },
                                 onBroadcastDispatched = { newAlert ->
-                                    // Prepend the new broadcast to the top of the live feed
                                     broadcastsList.add(0, newAlert)
                                 },
                                 onViewResponseMap = { alertId ->
-                                    // Switch to HOME → Map tab with the broadcast alert preselected
                                     mapPreselectedAlertId = alertId
                                     currentTab = MainBottomTab.MAP
-                                    currentScreen = AppDestination.HOME
+                                    currentScreen = AppDestination.AUTHORITY_HOME
+                                }
+                            )
+                        }
+
+                        AppDestination.AUTHORITY_REPORTS -> {
+                            AuthorityReportsScreen(
+                                repository = reportsRepository,
+                                onNavigateBack = {
+                                    currentScreen = AppDestination.AUTHORITY_HOME
+                                },
+                                onReportClick = { reportId ->
+                                    selectedReportDetailId = reportId
+                                    currentScreen = AppDestination.AUTHORITY_REPORT_DETAIL
+                                }
+                            )
+                        }
+
+                        AppDestination.AUTHORITY_REPORT_DETAIL -> {
+                            selectedReportDetailId?.let { id ->
+                                ReportDetailScreen(
+                                    reportId = id,
+                                    repository = reportsRepository,
+                                    onNavigateBack = {
+                                        currentScreen = AppDestination.AUTHORITY_REPORTS
+                                    },
+                                    onSessionExpired = {
+                                        Session.clear()
+                                        currentScreen = AppDestination.LOGIN
+                                    }
+                                )
+                            } ?: run {
+                                currentScreen = AppDestination.AUTHORITY_REPORTS
+                            }
+                        }
+
+                        AppDestination.AUTHORITY_REPORTERS -> {
+                            AuthorityReportersScreen(
+                                repository = reportsRepository,
+                                onNavigateBack = {
+                                    currentScreen = AppDestination.AUTHORITY_HOME
+                                }
+                            )
+                        }
+
+                        AppDestination.REPORTER_HOME -> {
+                            ReporterShellScreen(
+                                repository = reportsRepository,
+                                onNavigateToNewReport = {
+                                    currentScreen = AppDestination.REPORTER_NEW_REPORT
+                                },
+                                onLogout = {
+                                    Session.clear()
+                                    currentScreen = AppDestination.LOGIN
+                                }
+                            )
+                        }
+
+                        AppDestination.REPORTER_NEW_REPORT -> {
+                            NewReportScreen(
+                                repository = reportsRepository,
+                                onNavigateBack = {
+                                    currentScreen = AppDestination.REPORTER_HOME
+                                },
+                                onReportSubmitted = { _ ->
+                                    currentScreen = AppDestination.REPORTER_HOME
                                 }
                             )
                         }
@@ -174,7 +274,9 @@ private fun HomeWithTabs(
     currentTab: MainBottomTab,
     onTabSelected: (MainBottomTab) -> Unit,
     mapPreselectedAlertId: Long?,
-    onNavigateToEmergencyAlert: () -> Unit
+    onNavigateToEmergencyAlert: () -> Unit,
+    onNavigateToReports: () -> Unit,
+    onNavigateToReporters: () -> Unit
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
 
@@ -214,6 +316,8 @@ private fun HomeWithTabs(
                 isDarkTheme = isDarkTheme,
                 onToggleTheme = onToggleTheme,
                 onNavigateToEmergencyAlert = onNavigateToEmergencyAlert,
+                onNavigateToReports = onNavigateToReports,
+                onNavigateToReporters = onNavigateToReporters,
                 broadcastsCount = broadcasts.size,
                 modifier = Modifier.fillMaxSize()
             )

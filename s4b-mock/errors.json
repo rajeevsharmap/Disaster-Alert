@@ -1,0 +1,26 @@
+{
+  "400_confirm_not_true": {
+    "error": "confirm must be true"
+  },
+  "400_validation": {
+    "error": "title must be 1-120 characters"
+  },
+  "403_reporter": {
+    "error": "This action needs the AUTHORITY role"
+  },
+  "404": {
+    "error": "Report not found"
+  },
+  "409_transition": {
+    "error": "Report cannot be verified from status VERIFIED"
+  },
+  "409_stale_draft": {
+    "error": "The draft changed after you opened it. Review the latest version and publish again"
+  },
+  "409_not_verified": {
+    "error": "A draft needs a VERIFIED report"
+  },
+  "409_already_published": {
+    "error": "The alert is already published"
+  }
+}

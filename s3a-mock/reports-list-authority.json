@@ -1,0 +1,26 @@
+[
+  {
+    "id": 43, "reportCode": "REPORT-00043", "category": "WATER_NEEDED",
+    "state": "Karnataka", "district": "Udupi", "city": "Brahmavar",
+    "latitude": 13.4281, "longitude": 74.7447, "accuracyM": 20.0,
+    "status": "SUBMITTED", "analysisStatus": "NOT_STARTED",
+    "trustFlags": [], "reporterId": 5, "reporterName": "Anil",
+    "createdAt": "2026-11-02T09:15:03Z"
+  },
+  {
+    "id": 42, "reportCode": "REPORT-00042", "category": "FLOODED_AREA",
+    "state": "Karnataka", "district": "Udupi", "city": "Udupi",
+    "latitude": 13.3409, "longitude": 74.7421, "accuracyM": null,
+    "status": "SUBMITTED", "analysisStatus": "NOT_STARTED",
+    "trustFlags": ["GPS_MISMATCH", "OLD_PHOTO"], "reporterId": 6, "reporterName": "Meena",
+    "createdAt": "2026-11-02T07:02:44Z"
+  },
+  {
+    "id": 41, "reportCode": "REPORT-00041", "category": "ROAD_BLOCKED",
+    "state": "Karnataka", "district": "Udupi", "city": "Kollur",
+    "latitude": 13.8626, "longitude": 74.8147, "accuracyM": 12.5,
+    "status": "SUBMITTED", "analysisStatus": "NOT_STARTED",
+    "trustFlags": ["EXIF_MISSING"], "reporterId": 5, "reporterName": "Anil",
+    "createdAt": "2026-11-02T05:41:20Z"
+  }
+]

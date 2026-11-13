@@ -1,0 +1,84 @@
+[
+  {
+    "id": 44,
+    "reportCode": "REPORT-00044",
+    "category": "ROAD_BLOCKED",
+    "note": "Same landslide, other side of the bridge",
+    "state": "Karnataka",
+    "district": "Udupi",
+    "city": "Kollur",
+    "status": "SUBMITTED",
+    "createdAt": "2026-11-02T09:40:10Z",
+    "linkedToReportCode": "REPORT-00041",
+    "clarification": null,
+    "alert": null
+  },
+  {
+    "id": 43,
+    "reportCode": "REPORT-00043",
+    "category": "WATER_NEEDED",
+    "note": "Around 30 families have no drinking water since last night",
+    "state": "Karnataka",
+    "district": "Udupi",
+    "city": "Brahmavar",
+    "status": "SUBMITTED",
+    "createdAt": "2026-11-02T09:15:03Z",
+    "linkedToReportCode": null,
+    "clarification": null,
+    "alert": null
+  },
+  {
+    "id": 42,
+    "reportCode": "REPORT-00042",
+    "category": "FLOODED_AREA",
+    "note": "Water over the knee near the bus stand",
+    "state": "Karnataka",
+    "district": "Udupi",
+    "city": "Udupi",
+    "status": "REJECTED",
+    "createdAt": "2026-11-02T07:02:44Z",
+    "linkedToReportCode": null,
+    "clarification": null,
+    "alert": null
+  },
+  {
+    "id": 41,
+    "reportCode": "REPORT-00041",
+    "category": "ROAD_BLOCKED",
+    "note": "Landslide across the road near the bridge",
+    "state": "Karnataka",
+    "district": "Udupi",
+    "city": "Kollur",
+    "status": "ALERT_PUBLISHED",
+    "createdAt": "2026-11-02T05:41:20Z",
+    "linkedToReportCode": null,
+    "clarification": null,
+    "alert": {
+      "id": 9,
+      "alertCode": "HAZARD-00009",
+      "severity": "ORANGE",
+      "publishedAt": "2026-11-02T06:10:00Z",
+      "resolvedAt": null
+    }
+  },
+  {
+    "id": 38,
+    "reportCode": "REPORT-00038",
+    "category": "ROAD_CLEARED",
+    "note": "Debris removed, road open to all traffic",
+    "state": "Karnataka",
+    "district": "Udupi",
+    "city": "Kollur",
+    "status": "RESOLVED",
+    "createdAt": "2026-11-01T14:30:00Z",
+    "linkedToReportCode": null,
+    "clarification": null,
+    "alert": {
+      "id": 7,
+      "alertCode": "HAZARD-00007",
+      "severity": "YELLOW",
+      "publishedAt": "2026-11-01T15:00:00Z",
+      "resolvedAt": "2026-11-01T18:20:00Z"
+    }
+  }
+]

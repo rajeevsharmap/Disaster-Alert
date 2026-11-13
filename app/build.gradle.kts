@@ -46,7 +46,16 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.2")
+
+    // Slice S3a: CameraX and EXIF metadata handling
+    implementation(libs.androidx.camera.core)
+    implementation(libs.androidx.camera.camera2)
+    implementation(libs.androidx.camera.lifecycle)
+    implementation(libs.androidx.camera.view)
+    implementation(libs.androidx.exifinterface)
     testImplementation(libs.junit)
+    // Slice S4a test dependency: org.json implementation for JVM unit tests of BackendApi JSON parsing
+    testImplementation("org.json:json:20240303")
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     androidTestImplementation(libs.androidx.espresso.core)

@@ -1,0 +1,18 @@
+{
+  "status": "COMPLETED",
+  "sceneSummary": "A dry paved road with normal traffic. No flooding is visible.",
+  "suggestedCategory": "OTHER",
+  "hazard": "No hazard visible",
+  "severity": "GREEN",
+  "consistency": "INCONSISTENT",
+  "confidence": 0.31,
+  "caveats": ["Photo does not show the reported flooding", "Photo may be from another place or time"],
+  "draftAlert": {
+    "title": "Possible flooding near Udupi bus stand",
+    "message": "Flooding was reported near the Udupi bus stand but could not be seen in the photo.",
+    "instructions": ["Check with the district control room before publishing"]
+  },
+  "model": "gemini-2.5-flash",
+  "promptVersion": "v1",
+  "analyzedAt": "2026-11-03T08:20:10Z"
+}

@@ -1,0 +1,26 @@
+{
+  "id": 9,
+  "alertCode": "HAZARD-00009",
+  "status": "PUBLISHED",
+  "draftVersion": 3,
+  "hazardType": "Landslide",
+  "severity": "ORANGE",
+  "state": "Karnataka",
+  "district": "Udupi",
+  "city": "Kollur",
+  "title": "Road blocked near Kollur",
+  "message": "A landslide is blocking the road near Kollur bridge.",
+  "instructions": "Do not use this road.\nUse the alternate route via the coastal highway.",
+  "validUntil": null,
+  "audienceEstimate": 42,
+  "dispatchStatus": "SENDING",
+  "createdBy": "District Collector Udupi",
+  "approvedBy": "District Collector Udupi",
+  "publishedAt": "2026-11-04T08:40:00Z",
+  "resolvedAt": null,
+  "delivery": {
+    "sent": 12,
+    "failed": 0,
+    "pending": 30
+  }
+}

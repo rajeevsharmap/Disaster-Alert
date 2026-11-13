@@ -1,0 +1,115 @@
+{
+  "id": 41,
+  "reportCode": "REPORT-00041",
+  "category": "ROAD_BLOCKED",
+  "note": "Landslide across the road near the bridge",
+  "state": "Karnataka",
+  "district": "Udupi",
+  "city": "Kollur",
+  "latitude": 13.8626,
+  "longitude": 74.8147,
+  "accuracyM": 12.5,
+  "capturedAt": "2026-11-04T08:10:12Z",
+  "mockLocation": false,
+  "exif": {
+    "hasGps": false,
+    "latitude": null,
+    "longitude": null,
+    "takenAt": null,
+    "distanceToReportedM": null
+  },
+  "trustFlags": [
+    "EXIF_MISSING"
+  ],
+  "status": "RESOLVED",
+  "analysisStatus": "COMPLETED",
+  "reporterId": 5,
+  "reporterName": "Anil",
+  "photoUrl": "/api/reports/41/photo",
+  "createdAt": "2026-11-04T08:10:20Z",
+  "linkedToReportId": null,
+  "analysis": {
+    "status": "COMPLETED",
+    "sceneSummary": "Mud and rock across a two-lane road, no vehicles visible.",
+    "suggestedCategory": "LANDSLIDE",
+    "hazard": "Road blocked by landslide",
+    "severity": "ORANGE",
+    "consistency": "CONSISTENT",
+    "confidence": 0.78,
+    "caveats": [
+      "Photo shows no scale",
+      "Location not verified against EXIF"
+    ],
+    "draftAlert": {
+      "title": "Road blocked near Kollur",
+      "message": "A landslide is blocking the road near Kollur bridge.",
+      "instructions": [
+        "Do not use this road",
+        "Use the alternate route via ..."
+      ]
+    },
+    "model": "gemini-2.5-flash",
+    "promptVersion": "v1",
+    "analyzedAt": "2026-11-04T08:12:41Z"
+  },
+  "decisions": [
+    {
+      "id": 1,
+      "decision": "REQUEST_CLARIFICATION",
+      "note": "Is the road fully blocked or one lane open?",
+      "decidedBy": "District Collector Udupi",
+      "decidedAt": "2026-11-04T08:20:00Z"
+    },
+    {
+      "id": 2,
+      "decision": "VERIFY",
+      "note": "Confirmed with district control room",
+      "decidedBy": "District Collector Udupi",
+      "decidedAt": "2026-11-04T08:30:00Z"
+    },
+    {
+      "id": 3,
+      "decision": "RESOLVE",
+      "note": "Road reopened",
+      "decidedBy": "District Collector Udupi",
+      "decidedAt": "2026-11-04T12:00:00Z"
+    }
+  ],
+  "clarifications": [
+    {
+      "id": 1,
+      "question": "Is the road fully blocked or one lane open?",
+      "askedBy": "District Collector Udupi",
+      "askedAt": "2026-11-04T08:20:00Z",
+      "answer": "One lane is open",
+      "answeredAt": "2026-11-04T08:25:00Z"
+    }
+  ],
+  "hazardAlert": {
+    "id": 9,
+    "alertCode": "HAZARD-00009",
+    "status": "RESOLVED",
+    "draftVersion": 3,
+    "hazardType": "Landslide",
+    "severity": "ORANGE",
+    "state": "Karnataka",
+    "district": "Udupi",
+    "city": "Kollur",
+    "title": "Road blocked near Kollur",
+    "message": "A landslide is blocking the road near Kollur bridge.",
+    "instructions": "Do not use this road.\nUse the alternate route via the coastal highway.",
+    "validUntil": null,
+    "audienceEstimate": 42,
+    "dispatchStatus": "COMPLETED",
+    "createdBy": "District Collector Udupi",
+    "approvedBy": "District Collector Udupi",
+    "publishedAt": "2026-11-04T08:40:00Z",
+    "resolvedAt": "2026-11-04T12:00:00Z",
+    "delivery": {
+      "sent": 42,
+      "failed": 0,
+      "pending": 0
+    }
+  },
+  "possibleDuplicates": []
+}

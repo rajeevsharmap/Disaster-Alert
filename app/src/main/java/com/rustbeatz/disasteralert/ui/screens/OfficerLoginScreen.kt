@@ -1,5 +1,6 @@
 package com.rustbeatz.disasteralert.ui.screens
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -34,6 +35,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.font.FontWeight
@@ -78,6 +80,10 @@ fun OfficerLoginScreen(
                 val result = BackendApi.login(officerId.trim(), pin)
                 Session.token = result.token
                 Session.officerName = result.officerName
+                Session.role = result.role
+                Session.userId = result.userId
+                Session.state = result.state
+                Session.district = result.district
                 onLoggedIn()
             } catch (e: ApiException) {
                 error = e.message
@@ -112,7 +118,7 @@ fun OfficerLoginScreen(
                 Spacer(modifier = Modifier.height(18.dp))
 
                 Text(
-                    text = "Authority Sign-in",
+                    text = "Personnel Sign-in",
                     style = MaterialTheme.typography.titleLarge.copy(
                         fontWeight = FontWeight.Bold,
                         fontSize = 24.sp
@@ -121,13 +127,57 @@ fun OfficerLoginScreen(
                 )
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
-                    text = "Govt. of India • NDMA & SDMA Network",
+                    text = "Authority & Field Reporter Emergency Network",
                     fontSize = 12.5.sp,
                     fontWeight = FontWeight.Medium,
                     color = MaterialTheme.colorScheme.primary
                 )
 
-                Spacer(modifier = Modifier.height(28.dp))
+                Spacer(modifier = Modifier.height(20.dp))
+
+                // Quick role demo selection buttons for effortless hackathon evaluation
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    Surface(
+                        shape = RoundedCornerShape(10.dp),
+                        color = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.6f),
+                        border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.primary.copy(alpha = 0.4f)),
+                        modifier = Modifier
+                            .weight(1f)
+                            .clip(RoundedCornerShape(10.dp))
+                            .clickable {
+                                officerId = "asha.dc"
+                                pin = "1234"
+                            }
+                    ) {
+                        Column(modifier = Modifier.padding(8.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+                            Text(text = "🏛️ Authority", fontSize = 11.5.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onPrimaryContainer)
+                            Text(text = "asha.dc / 1234", fontSize = 10.sp, color = MaterialTheme.colorScheme.primary)
+                        }
+                    }
+
+                    Surface(
+                        shape = RoundedCornerShape(10.dp),
+                        color = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 0.6f),
+                        border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.secondary.copy(alpha = 0.4f)),
+                        modifier = Modifier
+                            .weight(1f)
+                            .clip(RoundedCornerShape(10.dp))
+                            .clickable {
+                                officerId = "anil.rep"
+                                pin = "1111"
+                            }
+                    ) {
+                        Column(modifier = Modifier.padding(8.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+                            Text(text = "📡 Reporter", fontSize = 11.5.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSecondaryContainer)
+                            Text(text = "anil.rep / 1111", fontSize = 10.sp, color = MaterialTheme.colorScheme.secondary)
+                        }
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(20.dp))
 
                 OutlinedTextField(
                     value = officerId,

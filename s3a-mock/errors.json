@@ -1,0 +1,12 @@
+{
+  "400_validation":      {"error": "category must be one of ROAD_BLOCKED, ROAD_CLEARED, FLOODED_AREA, LANDSLIDE, POWER_OUTAGE, FOOD_NEEDED, WATER_NEEDED, MEDICAL_NEEDED, SHELTER, OTHER"},
+  "400_not_jpeg":        {"error": "Photo must be a JPEG image"},
+  "400_too_large":       {"error": "Photo is larger than 10 MB"},
+  "400_photo_missing":   {"error": "Photo is required"},
+  "400_wrong_district":  {"error": "Report must be inside your assigned district: Udupi, Karnataka"},
+  "401":                 {"error": "Unauthorized"},
+  "403_wrong_role":      {"error": "This action needs the AUTHORITY role"},
+  "403_not_yours":       {"error": "You can only open your own reports"},
+  "404":                 {"error": "Report not found"},
+  "409_user_exists":     {"error": "User ID already exists"}
+}

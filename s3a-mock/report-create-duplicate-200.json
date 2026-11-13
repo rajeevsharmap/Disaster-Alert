@@ -1,0 +1,9 @@
+{
+  "id": 41,
+  "reportCode": "REPORT-00041",
+  "status": "SUBMITTED",
+  "analysisStatus": "NOT_STARTED",
+  "trustFlags": ["EXIF_MISSING"],
+  "duplicate": true,
+  "createdAt": "2026-11-02T05:41:20Z"
+}

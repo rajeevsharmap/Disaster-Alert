@@ -1,0 +1,18 @@
+{
+  "status": "COMPLETED",
+  "sceneSummary": "SIMULATED analysis (no real AI): the photo is assumed to match the reported category ROAD_BLOCKED.",
+  "suggestedCategory": "ROAD_BLOCKED",
+  "hazard": "Road blocked",
+  "severity": "ORANGE",
+  "consistency": "CONSISTENT",
+  "confidence": 0.5,
+  "caveats": ["Simulated result for testing"],
+  "draftAlert": {
+    "title": "Road blocked near Kollur",
+    "message": "The road near Kollur is reported blocked.",
+    "instructions": ["Avoid this road"]
+  },
+  "model": "simulated-fake",
+  "promptVersion": "v1",
+  "analyzedAt": "2026-11-03T08:12:41Z"
+}

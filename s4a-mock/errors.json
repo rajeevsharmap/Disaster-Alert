@@ -1,0 +1,5 @@
+{
+  "403_reporter":  {"error": "This action needs the AUTHORITY role"},
+  "404":           {"error": "Report not found"},
+  "409_running":   {"error": "Analysis is already queued or running"}
+}

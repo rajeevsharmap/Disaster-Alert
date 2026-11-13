@@ -1,0 +1,101 @@
+[
+  {
+    "id": 46,
+    "reportCode": "REPORT-00046",
+    "category": "WATER_NEEDED",
+    "note": "No drinking water",
+    "state": "Karnataka",
+    "district": "Udupi",
+    "city": "Brahmavar",
+    "status": "NEEDS_CLARIFICATION",
+    "createdAt": "2026-11-04T09:30:00Z",
+    "linkedToReportCode": null,
+    "clarification": {
+      "question": "How many families are affected?",
+      "askedAt": "2026-11-04T09:40:00Z"
+    },
+    "alert": null
+  },
+  {
+    "id": 45,
+    "reportCode": "REPORT-00045",
+    "category": "POWER_OUTAGE",
+    "note": "Transformer down",
+    "state": "Karnataka",
+    "district": "Udupi",
+    "city": "Udupi",
+    "status": "PENDING_REVIEW",
+    "createdAt": "2026-11-04T09:10:00Z",
+    "linkedToReportCode": null,
+    "clarification": null,
+    "alert": null
+  },
+  {
+    "id": 41,
+    "reportCode": "REPORT-00041",
+    "category": "ROAD_BLOCKED",
+    "note": "Landslide across the road",
+    "state": "Karnataka",
+    "district": "Udupi",
+    "city": "Kollur",
+    "status": "ALERT_PUBLISHED",
+    "createdAt": "2026-11-04T08:10:20Z",
+    "linkedToReportCode": null,
+    "clarification": null,
+    "alert": {
+      "id": 9,
+      "alertCode": "HAZARD-00009",
+      "severity": "ORANGE",
+      "publishedAt": "2026-11-04T08:40:00Z",
+      "resolvedAt": null
+    }
+  },
+  {
+    "id": 40,
+    "reportCode": "REPORT-00040",
+    "category": "ROAD_BLOCKED",
+    "note": "Debris on road",
+    "state": "Karnataka",
+    "district": "Udupi",
+    "city": "Kollur",
+    "status": "RESOLVED",
+    "createdAt": "2026-11-03T14:30:00Z",
+    "linkedToReportCode": null,
+    "clarification": null,
+    "alert": {
+      "id": 7,
+      "alertCode": "HAZARD-00007",
+      "severity": "YELLOW",
+      "publishedAt": "2026-11-03T15:00:00Z",
+      "resolvedAt": "2026-11-03T18:20:00Z"
+    }
+  },
+  {
+    "id": 39,
+    "reportCode": "REPORT-00039",
+    "category": "FLOODED_AREA",
+    "note": "Water near bus stand",
+    "state": "Karnataka",
+    "district": "Udupi",
+    "city": "Udupi",
+    "status": "REJECTED",
+    "createdAt": "2026-11-03T07:02:44Z",
+    "linkedToReportCode": null,
+    "clarification": null,
+    "alert": null
+  },
+  {
+    "id": 38,
+    "reportCode": "REPORT-00038",
+    "category": "SHELTER",
+    "note": "School open as shelter",
+    "state": "Karnataka",
+    "district": "Udupi",
+    "city": "Kollur",
+    "status": "VERIFIED",
+    "createdAt": "2026-11-03T06:00:00Z",
+    "linkedToReportCode": null,
+    "clarification": null,
+    "alert": null
+  }
+]
